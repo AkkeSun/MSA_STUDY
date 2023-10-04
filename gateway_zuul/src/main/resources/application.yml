@@ -1,0 +1,13 @@
+
+server:
+  port: 8000
+
+spring:
+  application:
+    name: netflix-zuul
+
+zuul:
+  routes:
+    user: # application name
+      path: /user/**
+      url: http://localhost:8081/user
