@@ -1,0 +1,13 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: service-user # 유레카에 해당 이름이 노출된다
+
+eureka:
+  client:
+    fetch-registry: true  # 유레카 서버로부터 서비스 목록을 로컬 캐시에 저장할 건지 여부
+    register-with-eureka: true # 유레카 서버에 본인 서비스를 등록할 건지 여부
+    service-url:
+      default-zone: http://127.0.0.1:8761/eureka # 유레카 서버
