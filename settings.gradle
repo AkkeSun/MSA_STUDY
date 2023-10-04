@@ -1,3 +1,4 @@
 rootProject.name = 'msa_study'
 include 'service_discovery'
+include 'service_user'
 
