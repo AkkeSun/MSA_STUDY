@@ -2,6 +2,13 @@
 server:
   port: 8000
 
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      default-zone: http://127.0.0.1:8761/eureka
+
 spring:
   application:
     name: gateway
@@ -15,7 +22,8 @@ spring:
             postLogger: true
       routes:
         - id: user
-          uri: http://localhost:8081
+          #uri: http://localhost:8081
+          uri: lb://SERVICE-USER # Eureka Application Name
           predicates:
             - Path=/user/**
           filters:
