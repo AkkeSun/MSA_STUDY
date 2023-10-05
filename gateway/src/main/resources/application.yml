@@ -1,0 +1,25 @@
+
+server:
+  port: 8000
+
+spring:
+  application:
+    name: gateway
+  # localhost:8000/user/check 로 요청하면 http://localhost:8081/user/check 가 마운트 된다
+  cloud:
+    gateway:
+      default-filters:  # 모든 라우터에 적용되는 필터 지정
+        - name: GlobalFilter
+          args:
+            preLogger: true
+            postLogger: true
+      routes:
+        - id: user
+          uri: http://localhost:8081
+          predicates:
+            - Path=/user/**
+          filters:
+            - AddRequestHeader=reqKey, reqVal # default filter
+            - AddResponseHeader=resKey, resVal  # default filter
+            - CustomFilter # custom filter
+
