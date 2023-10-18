@@ -4,6 +4,15 @@ server:
 spring:
   application:
     name: service-user # 유레카에 해당 이름이 노출된다
+  datasource:
+    url: jdbc:mysql://db.sewoomch.com:3306/dbsewoomch?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true
+    username: ENC(ShdZigbYUELWeDvvtSi6aXafgl9HNEMV)
+    password: ENC(mqnPTyJdJloXOqte4GzizJ7Lo+f9v8lY)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
 eureka:
   client:
@@ -11,3 +20,7 @@ eureka:
     register-with-eureka: true # 유레카 서버에 본인 서비스를 등록할 건지 여부
     service-url:
       default-zone: http://127.0.0.1:8761/eureka # 유레카 서버
+
+
+token:
+  url: "http://localhost:8082"
