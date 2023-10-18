@@ -44,12 +44,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String username = (String) authentication.getPrincipal();
         String snsSync = details.get("snsSync");
         String secretKey = details.get("snsSecretKey");
-        UserDetails userDetails = userDetailService.loadUserByUsernameAndSnsSync(username,
-            snsSync);
+        UserDetails userDetails = userDetailService.loadUserByUsernameAndSnsSync(username, snsSync);
 
-        if (ObjectUtils.isEmpty(userDetails)) {
-            throw new BadCredentialsException("Invalid UserInfo");
-        }
         if (!passwordEncoder.matches(secretKey, userDetails.getPassword())) {
             throw new BadCredentialsException("Invalid secretKey");
         }
