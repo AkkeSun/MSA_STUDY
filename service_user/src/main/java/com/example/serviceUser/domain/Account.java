@@ -1,6 +1,7 @@
 package com.example.serviceUser.domain;
 
 import com.example.serviceUser.adopter.out.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,11 +9,14 @@ import lombok.Getter;
 @Builder
 public class Account {
     private String username;
-    private String password;
     private String name;
     private String phoneNumber;
     private String address;
-    private String snsSync;
-    private String snsSecret;
     private Role role;
+    @JsonIgnore
+    private String snsSync;
+    @JsonIgnore
+    private String snsSecret;
+    @JsonIgnore
+    private String password;
 }
