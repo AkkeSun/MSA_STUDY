@@ -12,7 +12,7 @@ spring:
       name: common,user # file name
       profile: real      # file profile
 
-# actuator setting (설정파일 refresh : curl - POST http//localhost:8081/actuator/health
+# actuator setting (설정파일 refresh : curl - POST http//localhost:8081/actuator/refresh
 management:
   endpoints:
     web:
