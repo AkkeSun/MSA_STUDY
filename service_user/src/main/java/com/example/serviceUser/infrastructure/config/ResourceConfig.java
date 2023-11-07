@@ -23,6 +23,8 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
         http.authorizeRequests()
             .mvcMatchers(HttpMethod.POST, "/user").permitAll()
             .mvcMatchers(HttpMethod.POST, "/user/sns").permitAll()
+            .antMatchers("/actuator/**").permitAll()
+            .antMatchers("/user/check").permitAll()
             .anyRequest()
             .authenticated();
     }
