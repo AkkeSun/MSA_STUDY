@@ -3,4 +3,4 @@ include 'service_discovery'
 include 'service_user'
 include 'gateway'
 include 'oauth2'
-
+include 'cloud_config'
