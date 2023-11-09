@@ -1,4 +1,4 @@
-package com.example.serviceUser.adopter.out;
+package com.example.serviceUser.application.port.out;
 
 import java.util.List;
 import lombok.AllArgsConstructor;

@@ -17,7 +17,7 @@ import com.example.serviceUser.application.port.out.AccountReadPort;
 import com.example.serviceUser.application.port.out.AccountUpdatePort;
 import com.example.serviceUser.application.port.out.TokenReadPort;
 import com.example.serviceUser.domain.Account;
-import com.example.serviceUser.adopter.out.TokenInfo;
+import com.example.serviceUser.application.port.out.TokenInfo;
 import com.example.serviceUser.infrastructure.exception.ApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -72,7 +72,7 @@ public class AccountService implements AccountCreateUseCase, AccountSearchUseCas
 
     @Override
     public AccountResponse getInfo(String accessToken) {
-        TokenInfo tokenInfo = tokenReadPort.getTokenInfo(accessToken);
+        TokenInfo tokenInfo = tokenReadPort.getTokenInfo("Bearer " + accessToken);
         return AccountResponse.ofSuccess(accountReadPort.getAccount(tokenInfo.getUser_name()));
     }
 
