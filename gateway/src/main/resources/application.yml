@@ -2,18 +2,17 @@
 server:
   port: 8000
 
-eureka:
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      default-zone: http://127.0.0.1:8761/eureka
-
 spring:
   application:
     name: gateway
-  # localhost:8000/user/check 로 요청하면 http://localhost:8081/user/check 가 마운트 된다
+  config:
+    import: "optional:configserver:http://localhost:8888/"
   cloud:
+    config:
+      name: common,mysql  # file name
+      profile: real        # file profile
+
+    # localhost:8000/oauth/password 로 요청하면 http://localhost:8081/oauth/password 가 마운트 된다
     gateway:
       default-filters:  # 모든 라우터에 적용되는 필터 지정
         - name: GlobalFilter
@@ -23,9 +22,9 @@ spring:
       routes:
         - id: user
           #uri: http://localhost:8081
-          uri: lb://SERVICE-USER # Eureka Application Name
+          uri: lb://OAUTH2 # Eureka Application Name
           predicates:
-            - Path=/user/**
+            - Path=/oauth/**
           filters:
             - AddRequestHeader=reqKey, reqVal # default filter
             - AddResponseHeader=resKey, resVal  # default filter
