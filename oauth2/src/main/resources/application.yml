@@ -20,11 +20,6 @@ management:
       exposure:
         include: health, refresh, beans
 
-logging:
-  level:
-    root: debug
-
-
 ###### 아래 정보는 spring cloud config 에서 관리 ######
 
 #  datasource:
