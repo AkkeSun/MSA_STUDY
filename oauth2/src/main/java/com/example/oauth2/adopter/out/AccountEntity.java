@@ -1,5 +1,6 @@
 package com.example.oauth2.adopter.out;
 
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -48,6 +49,12 @@ public class AccountEntity {
 
     @Column(name = "SNS_SECRET")
     private String snsSecret;
+
+    @Column(name = "REG_DATE")
+    private String regDate;
+
+    @Column(name = "LAST_LOGIN_TIME")
+    private LocalDateTime lastLoginTime;
 
     @Enumerated(EnumType.STRING)
     private Role role;
