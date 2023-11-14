@@ -2,6 +2,7 @@ package com.example.oauth2.domain;
 
 import com.example.oauth2.adopter.out.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -20,4 +21,6 @@ public class Account {
     private String snsSecret;
     @JsonIgnore
     private String password;
+    @JsonIgnore
+    private LocalDateTime lastLoginTime;
 }
