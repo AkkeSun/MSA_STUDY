@@ -26,7 +26,7 @@ spring:
           predicates:
             - Path=/oauth/**
           filters:
-            - AddRequestHeader=reqKey, reqVal # default filter
-            - AddResponseHeader=resKey, resVal  # default filter
-            - CustomFilter # custom filter
+            - LoginFilter
 
+oauth2:
+  url: http://localhost:8081
