@@ -7,6 +7,7 @@ public enum ApiErrorCode {
 
     PASSWORD_NOT_MATCHING("400", "비밀번호와 비밀번호 확인이 올바르지 않습니다"),
     USER_ID_IS_NULL("400", "유저 아이디가 비어있습니다"),
+    LAST_LOGIN_TIME_IS_NULL("400", "로그인 시간이 비어있습니다"),
     PASSWORD_IS_NULL("400", "비밀번호를 입력하지 않았습니다"),
     PASSWORD_CHECK_IS_NULL("400", "비밀번호 확인을 입력하지 않았습니다"),
     PHONE_NUMBER_IS_NULL("400", "전화번호가 비어있습니다"),
