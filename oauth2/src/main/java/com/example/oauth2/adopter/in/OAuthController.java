@@ -51,6 +51,11 @@ public class OAuthController {
         return ResponseEntity.ok(JwtHelper.decode(token.replace("Bearer ", "")).getClaims());
     }
 
+    @PutMapping("/login")
+    public ResponseEntity<AccountResponse> updateLoginTome(@RequestBody AccountCommand command) {
+        return ResponseEntity.ok(updateUseCase.updateLoginTime(command));
+    }
+
     @PutMapping
     public ResponseEntity<AccountResponse> update(
         @RequestHeader(name = "Authorization") String accessToken,
