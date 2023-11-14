@@ -9,6 +9,7 @@ import com.example.oauth2.application.port.out.AccountUpdatePort;
 import com.example.oauth2.domain.Account;
 import com.example.oauth2.infrastructure.exception.ApiException;
 import com.example.oauth2.infrastructure.util.AesUtils;
+import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -31,6 +32,7 @@ public class AccountPersistenceAdapter implements AccountCreatePort, AccountRead
             .snsSync(account.getSnsSync())
             .name(AesUtils.encrypt(account.getName()))
             .phoneNumber(AesUtils.encrypt(account.getPhoneNumber()))
+            .regDate(LocalDate.now().toString())
             .address(AesUtils.encrypt(account.getAddress()))
             .build();
         if(StringUtils.hasText(account.getPassword())){
@@ -73,12 +75,20 @@ public class AccountPersistenceAdapter implements AccountCreatePort, AccountRead
         entity.setName(AesUtils.encrypt(account.getName()));
         entity.setAddress(AesUtils.encrypt(account.getAddress()));
         entity.setPhoneNumber(AesUtils.encrypt(account.getPhoneNumber()));
-        if(StringUtils.hasText(account.getPassword())){
+        if (StringUtils.hasText(account.getPassword())) {
             entity.setPassword(passwordEncoder.encode(account.getPassword()));
         }
-        if(StringUtils.hasText(account.getSnsSecret())){
+        if (StringUtils.hasText(account.getSnsSecret())) {
             entity.setPassword(passwordEncoder.encode(account.getSnsSecret()));
         }
+    }
+
+    @Override
+    @Transactional
+    public void updateLoginTime(Account account) {
+        AccountEntity entity = repository.findByUserId(account.getUserId()).orElseThrow(() ->
+            new ApiException(USER_INFO_NOT_FOUND));
+        entity.setLastLoginTime(account.getLastLoginTime());
     }
 
     @Override

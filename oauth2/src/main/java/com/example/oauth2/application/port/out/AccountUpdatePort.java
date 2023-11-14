@@ -6,4 +6,6 @@ import com.example.oauth2.domain.Account;
 public interface AccountUpdatePort {
 
     void update(Account account);
+
+    void updateLoginTime(Account account);
 }
