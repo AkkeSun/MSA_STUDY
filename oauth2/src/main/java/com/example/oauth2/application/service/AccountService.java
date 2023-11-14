@@ -97,6 +97,17 @@ public class AccountService implements AccountCreateUseCase, AccountSearchUseCas
     }
 
     @Override
+    public AccountResponse updateLoginTime(AccountCommand command) {
+        command.updateLoginTimeValidation();
+        accountUpdatePort.updateLoginTime(Account.builder()
+            .userId(command.getUserId())
+            .lastLoginTime(command.getLastLoginTime())
+            .build()
+        );
+        return AccountResponse.ofSuccess(command.getUserId());
+    }
+
+    @Override
     public AccountResponse delete(String accessToken) {
         Token token = TokenUtils.convertToken(accessToken);
         if (!accountReadPort.existsAccount(token.getUser_name())) {
