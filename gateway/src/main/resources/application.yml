@@ -20,13 +20,19 @@ spring:
             preLogger: true
             postLogger: true
       routes:
-        - id: user
+        - id: oauth2
           #uri: http://localhost:8081
-          uri: lb://OAUTH2 # Eureka Application Name
+          uri: lb://OAUTH2
           predicates:
             - Path=/oauth/**
           filters:
             - LoginFilter
+        - id: product
+          #uri: http://localhost:8081
+          uri: lb://PRODUCT
+          predicates:
+            - Path=/product/**
+
 
 oauth2:
   url: http://localhost:8081
