@@ -7,4 +7,5 @@ public class Constants {
     public static String HISTORY_CATEGORY= "category";
     public static String HISTORY_PRICE = "price";
     public static String HISTORY_INVENTORY = "inventory";
+    public static String ACCOUNT_BREAKER_DEFAULT_VALUE = "anonymous";
 }

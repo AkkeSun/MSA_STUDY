@@ -1,6 +1,7 @@
 package com.example.product.application.service;
 
 import static com.example.product.infrastructure.exception.ApiErrorCode.ACCESS_DENIED;
+import static com.example.product.infrastructure.utils.Constants.ACCOUNT_BREAKER_DEFAULT_VALUE;
 
 import com.example.product.application.port.in.ProductCommand;
 import com.example.product.application.port.in.ProductCreateUseCase;
@@ -17,16 +18,17 @@ import com.example.product.application.port.out.ProductUpdatePort;
 import com.example.product.domain.Product;
 import com.example.product.infrastructure.exception.ApiException;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class ProductService implements ProductCreateUseCase, ProductUpdateUseCase,
     ProductSearchUseCase, ProductDeleteUseCase {
+
     private final ProductCreatePort productCreatePort;
     private final ProductUpdatePort productUpdatePort;
     private final ProductReadPort productReadPort;
@@ -38,7 +40,12 @@ public class ProductService implements ProductCreateUseCase, ProductUpdateUseCas
     public ProductResponse save(ProductCommand command, String accessToken) {
         command.validation();
         String category = categoryReadPort.getCategoryName(command.getCategoryId());
-        productCreatePort.create(command, category, getUserId(accessToken));
+        String userId = getUserId(accessToken);
+        Integer productId = productCreatePort.create(command, category, userId);
+        if (userId.equals(ACCOUNT_BREAKER_DEFAULT_VALUE)) {
+            log.error("[ACCOUNT_BREAKER_RUN] {} - {}", productId, accessToken);
+            // TODO: send log save topic & skack noti
+        }
         return ProductResponse.ofSuccess(command.getName());
     }
 
@@ -50,7 +57,6 @@ public class ProductService implements ProductCreateUseCase, ProductUpdateUseCas
     @Override
     public ProductResponse findBySeller(String seller, Pageable pageable) {
         return ProductResponse.ofSuccess(productReadPort.findBySeller(seller, pageable));
-
     }
 
     @Override
@@ -66,8 +72,8 @@ public class ProductService implements ProductCreateUseCase, ProductUpdateUseCas
         if (command.getCategoryId() != null) {
             category = categoryReadPort.getCategoryName(command.getCategoryId());
         }
-        String updateItem = productUpdatePort.update(command, category, getUserId(accessToken));
-        return ProductResponse.ofSuccess(updateItem);
+        String userId = getUserId(accessToken);
+        return ProductResponse.ofSuccess(productUpdatePort.update(command, category, userId));
     }
 
     @Override
@@ -82,8 +88,9 @@ public class ProductService implements ProductCreateUseCase, ProductUpdateUseCas
     }
 
     private String getUserId(String accessToken) {
-        Map<String, String> account = (LinkedHashMap<String, String>) accountReadPort.getAccount(
-            accessToken).getData();
-        return account.get("userId");
+        ProductResponse response = accountReadPort.getAccount(accessToken);
+        return ((LinkedHashMap<String, String>) accountReadPort.getAccount(
+            accessToken).getData()).get("userId");
     }
+
 }

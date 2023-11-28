@@ -3,6 +3,7 @@ package com.example.product.adopter.out;
 import static com.example.product.infrastructure.exception.ApiErrorCode.ACCESS_DENIED;
 import static com.example.product.infrastructure.exception.ApiErrorCode.INVALID_PRODUCT_CODE;
 import static com.example.product.infrastructure.exception.ApiErrorCode.INVALID_UPDATE_ITEM;
+import static com.example.product.infrastructure.utils.Constants.ACCOUNT_BREAKER_DEFAULT_VALUE;
 import static com.example.product.infrastructure.utils.Constants.HISTORY_CATEGORY;
 import static com.example.product.infrastructure.utils.Constants.HISTORY_CREATE;
 import static com.example.product.infrastructure.utils.Constants.HISTORY_INVENTORY;
@@ -40,7 +41,7 @@ public class ProductPersistenceAdapter implements ProductCreatePort, ProductRead
     private final ProductRepository productRepository;
 
     @Override
-    public void create(ProductCommand command, String category, String seller) {
+    public Integer create(ProductCommand command, String category, String seller) {
         LocalDateTime now = LocalDateTime.now();
         ProductHistoryEntity historyEntity = ProductHistoryEntity.builder()
             .description(HISTORY_CREATE)
@@ -58,6 +59,7 @@ public class ProductPersistenceAdapter implements ProductCreatePort, ProductRead
             .build();
         historyEntity.setRelation(productEntity);
         productRepository.save(productEntity);
+        return productEntity.getId();
     }
 
     @Override
@@ -74,6 +76,7 @@ public class ProductPersistenceAdapter implements ProductCreatePort, ProductRead
             .seller(entity.getSeller())
             .build();
     }
+
     @Override
     public List<Product> findBySeller(String seller, Pageable pageable) {
         return productRepository.findBySeller(seller, pageable).stream()
@@ -108,7 +111,7 @@ public class ProductPersistenceAdapter implements ProductCreatePort, ProductRead
         ProductEntity entity = productRepository.findById(command.getProductId())
             .orElseThrow(() -> new ApiException(INVALID_PRODUCT_CODE));
 
-        if (!entity.getSeller().equals(seller)) {
+        if (!seller.equals(ACCOUNT_BREAKER_DEFAULT_VALUE) && !entity.getSeller().equals(seller)) {
             throw new ApiException(ACCESS_DENIED);
         }
 
