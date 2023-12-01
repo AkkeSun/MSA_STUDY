@@ -30,6 +30,11 @@ public class ProductController {
     private final ProductSearchUseCase productSearchUseCase;
     private final ProductDeleteUseCase productDeleteUseCase;
 
+    @GetMapping("/health")
+    public ResponseEntity<String> healthCheck() {
+        return ResponseEntity.ok("ok");
+    }
+
     @GetMapping("/{productId}")
     public ResponseEntity<ProductResponse> getProduct(@PathVariable("productId") int productId) {
         return ResponseEntity.ok(productSearchUseCase.findById(productId));
