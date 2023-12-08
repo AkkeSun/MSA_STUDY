@@ -7,6 +7,7 @@ import com.example.product.application.port.in.ProductResponse;
 import com.example.product.application.port.in.ProductSearchUseCase;
 import com.example.product.application.port.in.ProductUpdateUseCase;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("/product")
 @RequiredArgsConstructor
@@ -32,7 +34,13 @@ public class ProductController {
 
     @GetMapping("/health")
     public ResponseEntity<String> healthCheck() {
-        return ResponseEntity.ok("ok");
+        log.info("[api Call] healthCheck"); // TODO: AOP
+        try {
+            productSearchUseCase.findByCategory(1, PageRequest.of(0, 2));
+            return ResponseEntity.ok("Y");
+        } catch (Exception e) {
+            return ResponseEntity.ok("N");
+        }
     }
 
     @GetMapping("/{productId}")
@@ -68,7 +76,7 @@ public class ProductController {
         @RequestHeader(value = "Authorization") String accessToken) {
         return ResponseEntity.ok(productUpdateUseCase.update(command, accessToken));
     }
- 
+
     @DeleteMapping("/{productId}")
     public ResponseEntity<ProductResponse> delete(@PathVariable("productId") int productId,
         @RequestHeader(value = "Authorization") String accessToken) {

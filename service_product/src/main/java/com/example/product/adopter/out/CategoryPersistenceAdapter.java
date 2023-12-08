@@ -9,10 +9,10 @@ import com.example.product.infrastructure.exception.ApiException;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class CategoryPersistenceAdapter implements CategoryReadPort {
 

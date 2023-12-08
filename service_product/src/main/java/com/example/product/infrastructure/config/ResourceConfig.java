@@ -21,6 +21,7 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+            .antMatchers("/health").permitAll()
             .antMatchers("/actuator/**").permitAll()
             .mvcMatchers(HttpMethod.GET, "/product/**").permitAll()
             .mvcMatchers(HttpMethod.POST, "/product").hasRole("SELLER")

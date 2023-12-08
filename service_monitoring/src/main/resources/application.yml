@@ -1,0 +1,18 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: monitoring
+  config:
+    import: "optional:configserver:http://localhost:8888/"
+  cloud:
+    config:
+      name: common,mongo
+      profile: real
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, refresh, beans

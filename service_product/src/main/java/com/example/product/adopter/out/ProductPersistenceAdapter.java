@@ -28,11 +28,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class ProductPersistenceAdapter implements ProductCreatePort, ProductReadPort,
     ProductUpdatePort, ProductDeletePort {
