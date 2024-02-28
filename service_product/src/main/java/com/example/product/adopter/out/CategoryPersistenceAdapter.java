@@ -1,39 +1,29 @@
 package com.example.product.adopter.out;
 
-import static com.example.product.infrastructure.exception.ApiErrorCode.INVALID_CATEGORY;
+import static com.example.product.infrastructure.exception.ErrorCode.INVALID_CATEGORY;
 
 import com.example.product.adopter.out.entity.CategoryEntity;
 import com.example.product.adopter.out.repository.CategoryRepository;
-import com.example.product.application.port.out.CategoryReadPort;
-import com.example.product.infrastructure.exception.ApiException;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.example.product.application.port.out.CategorySearchPort;
+import com.example.product.infrastructure.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryPersistenceAdapter implements CategoryReadPort {
+class CategoryPersistenceAdapter implements CategorySearchPort {
 
     private final CategoryRepository categoryRepository;
 
-    @Override
-    public String getCategoryName(Integer id) {
-        List<CategoryEntity> list = getCategoryList().stream()
-            .filter(entity -> entity.getId().equals(id))
-            .collect(Collectors.toList());
-        if (list.isEmpty()) {
-            throw new ApiException(INVALID_CATEGORY);
-        }
-        return list.get(0).getName();
-    }
-
     /*
-    TODO: 캐시처리
+        TODO: 캐시처리
     */
+    @Override
     @Transactional(readOnly = true)
-    public List<CategoryEntity> getCategoryList() {
-        return categoryRepository.findAll();
+    public String getCategoryName(Integer id) {
+        CategoryEntity entity = categoryRepository.findById(id)
+            .orElseThrow(() -> new CustomException(INVALID_CATEGORY));
+        return entity.getName();
     }
 }

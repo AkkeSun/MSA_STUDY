@@ -1,5 +1,6 @@
 package com.example.product.application.port.out;
 
-public interface CategoryReadPort {
+public interface CategorySearchPort {
+
     String getCategoryName(Integer id);
 }
