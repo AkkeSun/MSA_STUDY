@@ -1,7 +1,7 @@
 package com.example.oauth2.infrastructure.oauth2;
 
-import com.example.oauth2.adopter.out.AccountEntity;
-import com.example.oauth2.adopter.out.AccountRepository;
+import com.example.oauth2.adopter.out.entity.AccountEntity;
+import com.example.oauth2.adopter.out.repository.AccountRepository;
 import java.util.Collection;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

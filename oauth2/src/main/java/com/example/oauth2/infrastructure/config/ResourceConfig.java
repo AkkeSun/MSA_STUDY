@@ -21,6 +21,7 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+            .mvcMatchers(HttpMethod.GET, "/health").permitAll()
             .mvcMatchers(HttpMethod.POST, "/oauth/account").permitAll()
             .mvcMatchers(HttpMethod.POST, "/oauth/account/sns").permitAll()
             .mvcMatchers(HttpMethod.PUT, "/oauth/account/login").permitAll()

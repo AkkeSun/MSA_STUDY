@@ -1,5 +1,6 @@
 package com.example.oauth2.infrastructure.util;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -14,8 +15,8 @@ public class AesUtils {
 
     public static String encrypt(String plainText)  {
         try{
-            byte[] key128Data = KEY_128.getBytes("UTF-8");
-            byte[] key256Data = KEY_256.getBytes("UTF-8");
+            byte[] key128Data = KEY_128.getBytes(StandardCharsets.UTF_8);
+            byte[] key256Data = KEY_256.getBytes(StandardCharsets.UTF_8);
 
             Cipher cipher = Cipher.getInstance(Alg);
 
@@ -32,8 +33,8 @@ public class AesUtils {
 
     public static String decrypt(String cipherText) {
         try{
-            byte[] key128Data = KEY_128.getBytes("UTF-8");
-            byte[] key256Data = KEY_256.getBytes("UTF-8");
+            byte[] key128Data = KEY_128.getBytes(StandardCharsets.UTF_8);
+            byte[] key256Data = KEY_256.getBytes(StandardCharsets.UTF_8);
 
             Cipher cipher = Cipher.getInstance(Alg);
 
@@ -43,7 +44,7 @@ public class AesUtils {
 
             byte[] decodedBytes =  Base64.getDecoder().decode(cipherText);
             byte[] decrypted = cipher.doFinal(decodedBytes);
-            return new String(decrypted, "UTF-8");
+            return new String(decrypted, StandardCharsets.UTF_8);
         } catch (Exception e) {
             return null;
         }

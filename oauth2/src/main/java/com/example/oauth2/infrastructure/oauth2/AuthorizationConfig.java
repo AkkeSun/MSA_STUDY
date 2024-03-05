@@ -1,6 +1,5 @@
 package com.example.oauth2.infrastructure.oauth2;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,17 +10,31 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
-@RequiredArgsConstructor
-@EnableAuthorizationServer
 @Configuration
+@EnableAuthorizationServer
 public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
-    private final String CLIENT_NAME = "oauth2-server";
-    private final String SECRET = "pass";
-    private final String JWT_KEY = "oauth2_jwt_key";
+    private final String CLIENT_NAME;
+
+    private final String SECRET;
+
+    private final String JWT_KEY;
+
     private final AuthenticationManager authenticationManager;
+
     private final PasswordEncoder passwordEncoder;
+
     private final CustomUserDetailService userDetailsService;
+
+    public AuthorizationConfig(AuthenticationManager authenticationManager,
+        PasswordEncoder passwordEncoder, CustomUserDetailService userDetailsService) {
+        this.CLIENT_NAME = "oauth2-server";
+        this.SECRET = "pass";
+        this.JWT_KEY = "oauth2_jwt_key";
+        this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
