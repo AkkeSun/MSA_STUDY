@@ -1,4 +1,4 @@
-package com.example.product.adopter.out;
+package com.example.product.adopter.out.persistence;
 
 import static com.example.product.infrastructure.exception.ErrorCode.ACCESS_DENIED;
 import static com.example.product.infrastructure.exception.ErrorCode.INVALID_PRODUCT;
@@ -11,10 +11,6 @@ import static com.example.product.infrastructure.utils.Constants.HISTORY_NAME;
 import static com.example.product.infrastructure.utils.Constants.HISTORY_OPTION;
 import static com.example.product.infrastructure.utils.Constants.HISTORY_PRICE;
 
-import com.example.product.adopter.out.entity.ProductEntity;
-import com.example.product.adopter.out.entity.ProductHistoryEntity;
-import com.example.product.adopter.out.repository.ProductHistoryRepository;
-import com.example.product.adopter.out.repository.ProductRepository;
 import com.example.product.application.port.in.save.ProductSaveCommand;
 import com.example.product.application.port.in.update.ProductUpdateCommand;
 import com.example.product.application.port.out.ProductDeletePort;

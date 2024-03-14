@@ -1,6 +1,5 @@
-package com.example.product.adopter.out;
+package com.example.product.adopter.out.external.api.account;
 
-import com.example.product.adopter.out.feignClient.AccountFeignClient;
 import com.example.product.application.port.out.AccountSearchPort;
 import com.example.product.domain.Account;
 import com.example.product.infrastructure.response.ApiResponse;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-class AccountPersistenceAdapter implements AccountSearchPort {
+class AccountExternalApiAdapter implements AccountSearchPort {
 
     private final AccountFeignClient accountFeignClient;
 

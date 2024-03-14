@@ -1,9 +1,7 @@
-package com.example.product.adopter.out;
+package com.example.product.adopter.out.persistence;
 
 import static com.example.product.infrastructure.exception.ErrorCode.INVALID_CATEGORY;
 
-import com.example.product.adopter.out.entity.CategoryEntity;
-import com.example.product.adopter.out.repository.CategoryRepository;
 import com.example.product.application.port.out.CategorySearchPort;
 import com.example.product.infrastructure.exception.CustomException;
 import lombok.RequiredArgsConstructor;

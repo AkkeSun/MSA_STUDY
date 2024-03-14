@@ -1,4 +1,4 @@
-package com.example.product.adopter.out.entity;
+package com.example.product.adopter.out.persistence;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

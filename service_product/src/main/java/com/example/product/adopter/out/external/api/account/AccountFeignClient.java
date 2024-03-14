@@ -1,4 +1,4 @@
-package com.example.product.adopter.out.feignClient;
+package com.example.product.adopter.out.external.api.account;
 
 import static com.example.product.infrastructure.utils.Constants.ACCOUNT_BREAKER_DEFAULT_VALUE;
 

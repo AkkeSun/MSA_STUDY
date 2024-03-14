@@ -1,4 +1,4 @@
-package com.example.product.adopter.out.entity;
+package com.example.product.adopter.out.persistence;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
