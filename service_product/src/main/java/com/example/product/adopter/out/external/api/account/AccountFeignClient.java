@@ -5,7 +5,6 @@ import static com.example.product.infrastructure.utils.Constants.ACCOUNT_BREAKER
 import com.example.product.domain.Account;
 import com.example.product.infrastructure.response.ApiResponse;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import java.util.LinkedHashMap;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -17,9 +16,7 @@ public interface AccountFeignClient {
     @CircuitBreaker(name = "account", fallbackMethod = "fallback")
     ApiResponse<Account> getAccount(@RequestHeader("Authorization") String accessToken);
 
-    default ApiResponse fallback(Exception e) {
-        LinkedHashMap<String, String> defaultResponse = new LinkedHashMap<>();
-        defaultResponse.put("userId", ACCOUNT_BREAKER_DEFAULT_VALUE);
-        return ApiResponse.ok(defaultResponse);
+    default ApiResponse<Account> fallback(Exception e) {
+        return ApiResponse.ok(Account.builder().userId(ACCOUNT_BREAKER_DEFAULT_VALUE).build());
     }
 }

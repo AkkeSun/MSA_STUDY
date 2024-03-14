@@ -1,4 +1,4 @@
-package com.example.product.adopter.out.persistence;
+package com.example.product.adopter.out.persistence.product;
 
 import java.util.List;
 import org.springframework.data.domain.Pageable;

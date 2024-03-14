@@ -1,4 +1,4 @@
-package com.example.product.adopter.out.persistence;
+package com.example.product.adopter.out.persistence.productHistory;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
