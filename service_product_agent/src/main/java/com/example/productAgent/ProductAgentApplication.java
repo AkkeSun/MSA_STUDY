@@ -1,16 +1,16 @@
-package com.example.product;
+package com.example.productAgent;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableEurekaClient
-@EnableFeignClients
 @SpringBootApplication
-public class ProductApplication {
+@EnableScheduling
+public class ProductAgentApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ProductApplication.class, args);
+        SpringApplication.run(ProductAgentApplication.class, args);
     }
 }

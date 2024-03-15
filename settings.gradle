@@ -4,3 +4,5 @@ include 'gateway'
 include 'oauth2'
 include 'cloud_config'
 include 'service_product'
+include 'service_product_agent'
+
