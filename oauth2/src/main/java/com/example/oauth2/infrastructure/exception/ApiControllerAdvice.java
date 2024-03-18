@@ -18,8 +18,7 @@ public class ApiControllerAdvice {
     public ApiResponse<Object> bindException(BindException e) {
         return ApiResponse.of(
             HttpStatus.BAD_REQUEST,
-            e.getBindingResult().getAllErrors().get(0).getDefaultMessage(),
-            null
+            new ErrorDTO().of(e)
         );
     }
 
@@ -28,8 +27,7 @@ public class ApiControllerAdvice {
     public ApiResponse<Object> bindException(IllegalArgumentException e) {
         return ApiResponse.of(
             HttpStatus.FORBIDDEN,
-            e.getMessage(),
-            null
+            new ErrorDTO().of(e)
         );
     }
 
@@ -38,17 +36,19 @@ public class ApiControllerAdvice {
     public ApiResponse<Object> handleCustomBusinessException(CustomException ex) {
         log.info("CustomException : " + ex.getErrorCode().getMessage());
         return ApiResponse.of(
-            ex.getErrorCode().getCode(),
-            ex.getErrorCode().getMessage(),
-            null
+            HttpStatus.INTERNAL_SERVER_ERROR,
+            new ErrorDTO().of(ex)
         );
     }
-
+    
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ApiResponse<Object> handleInternalError(Exception e) throws Exception {
         log.error(e.getMessage());
-        throw new Exception(e);
+        return ApiResponse.of(
+            HttpStatus.INTERNAL_SERVER_ERROR,
+            new ErrorDTO().of(e)
+        );
     }
 }
