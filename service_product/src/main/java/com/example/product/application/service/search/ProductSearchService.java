@@ -1,8 +1,8 @@
 package com.example.product.application.service.search;
 
 import com.example.product.application.port.in.search.ProductSearchUseCase;
-import com.example.product.application.port.out.CategorySearchPort;
-import com.example.product.application.port.out.ProductSearchPort;
+import com.example.product.application.port.out.category.CategorySearchPort;
+import com.example.product.application.port.out.product.ProductSearchPort;
 import com.example.product.domain.Product;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

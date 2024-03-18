@@ -1,6 +1,5 @@
-package com.example.product.adopter.out.repository;
+package com.example.product.adopter.out.persistence.product;
 
-import com.example.product.adopter.out.entity.ProductEntity;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

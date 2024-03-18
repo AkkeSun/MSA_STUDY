@@ -1,16 +1,14 @@
-package com.example.product.adopter.out;
+package com.example.product.adopter.out.persistence.category;
 
 import static com.example.product.infrastructure.exception.ErrorCode.INVALID_CATEGORY;
 
-import com.example.product.adopter.out.entity.CategoryEntity;
-import com.example.product.adopter.out.repository.CategoryRepository;
-import com.example.product.application.port.out.CategorySearchPort;
+import com.example.product.application.port.out.category.CategorySearchPort;
 import com.example.product.infrastructure.exception.CustomException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@Component
 @RequiredArgsConstructor
 class CategoryPersistenceAdapter implements CategorySearchPort {
 

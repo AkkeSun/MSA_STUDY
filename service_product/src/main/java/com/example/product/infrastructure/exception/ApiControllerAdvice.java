@@ -1,6 +1,7 @@
 package com.example.product.infrastructure.exception;
 
 import com.example.product.infrastructure.response.ApiResponse;
+import com.example.product.infrastructure.response.ErrorDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
@@ -18,18 +19,7 @@ public class ApiControllerAdvice {
     public ApiResponse<Object> bindException(BindException e) {
         return ApiResponse.of(
             HttpStatus.BAD_REQUEST,
-            e.getBindingResult().getAllErrors().get(0).getDefaultMessage(),
-            null
-        );
-    }
-
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ApiResponse<Object> bindException(IllegalArgumentException e) {
-        return ApiResponse.of(
-            HttpStatus.FORBIDDEN,
-            e.getMessage(),
-            null
+            new ErrorDTO().of(e)
         );
     }
 
@@ -38,9 +28,8 @@ public class ApiControllerAdvice {
     public ApiResponse<Object> handleCustomBusinessException(CustomException ex) {
         log.info("CustomException : " + ex.getErrorCode().getMessage());
         return ApiResponse.of(
-            ex.getErrorCode().getCode(),
-            ex.getErrorCode().getMessage(),
-            null
+            HttpStatus.INTERNAL_SERVER_ERROR,
+            new ErrorDTO().of(ex)
         );
     }
 
@@ -49,6 +38,9 @@ public class ApiControllerAdvice {
     @ResponseBody
     public ApiResponse<Object> handleInternalError(Exception e) throws Exception {
         log.error(e.getMessage());
-        throw new Exception(e);
+        return ApiResponse.of(
+            HttpStatus.INTERNAL_SERVER_ERROR,
+            new ErrorDTO().of(e)
+        );
     }
 }

@@ -6,8 +6,6 @@ import lombok.Getter;
 @Getter
 public class ProductSaveCommand {
 
-    private Integer productId;
-
     private String name;
 
     private String option;
@@ -19,9 +17,8 @@ public class ProductSaveCommand {
     private Integer count;
 
     @Builder
-    public ProductSaveCommand(Integer productId, String name, String option, Integer categoryId,
+    public ProductSaveCommand(String name, String option, Integer categoryId,
         Integer price, Integer count) {
-        this.productId = productId;
         this.name = name;
         this.option = option;
         this.categoryId = categoryId;
