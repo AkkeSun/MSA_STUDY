@@ -1,4 +1,4 @@
-package com.example.oauth2.infrastructure.util;
+package com.example.oauth2.domain;
 
 import java.util.List;
 import lombok.Getter;

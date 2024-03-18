@@ -1,6 +1,5 @@
-package com.example.oauth2.infrastructure.provider;
+package com.example.oauth2.infrastructure.oauth2;
 
-import com.example.oauth2.infrastructure.oauth2.CustomUserDetailService;
 import java.util.LinkedHashMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;

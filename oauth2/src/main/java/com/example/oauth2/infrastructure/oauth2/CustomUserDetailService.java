@@ -1,7 +1,7 @@
 package com.example.oauth2.infrastructure.oauth2;
 
-import com.example.oauth2.adopter.out.entity.AccountEntity;
-import com.example.oauth2.adopter.out.repository.AccountRepository;
+import com.example.oauth2.application.port.out.FindAccountPort;
+import com.example.oauth2.domain.Account;
 import java.util.Collection;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -19,23 +19,21 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
 
-    private final AccountRepository repository;
+    private final FindAccountPort findAccountPort;
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        AccountEntity account = repository.findByUserId(userId)
-            .orElseThrow(() -> new UsernameNotFoundException("invalid userInfo"));
+        Account account = findAccountPort.findByUserId(userId);
         return new User(account.getUserId(), account.getPassword(), getAuthorities(account));
     }
 
     public UserDetails loadUserByUsernameAndSnsSync(String userId, String snsSync) {
-        AccountEntity account = repository.findByUserIdAndSnsSync(userId, snsSync)
-            .orElseThrow(() -> new UsernameNotFoundException("invalid userInfo"));
+        Account account = findAccountPort.findByUserIdAndSnsSync(userId, snsSync);
         // 소셜로그인의 경우 유저 패스워드를 getSnsSecretKey() 로 설정
         return new User(account.getUserId(), account.getSnsSecret(), getAuthorities(account));
     }
 
-    private Collection<? extends GrantedAuthority> getAuthorities(AccountEntity account) {
+    private Collection<? extends GrantedAuthority> getAuthorities(Account account) {
         return List.of(new SimpleGrantedAuthority(account.getRole().name()));
     }
 }
